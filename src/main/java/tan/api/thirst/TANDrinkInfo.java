@@ -8,7 +8,7 @@ public class TANDrinkInfo
     public float hydrationModifier;
     public float poisoningChance;
     
-    public static HashMap<String, TANDrinkInfo> drinkInfoMap = new HashMap();
+	public static HashMap<String, TANDrinkInfo> drinkInfoMap = new HashMap<String, TANDrinkInfo>();
     
     public TANDrinkInfo(int thirstAmount, float hydrationModifier, float poisoningChance)
     {
