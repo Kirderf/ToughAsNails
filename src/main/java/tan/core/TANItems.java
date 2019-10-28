@@ -1,14 +1,17 @@
 package tan.core;
 
 import net.minecraft.item.Item;
-import tan.api.ContentRegistry;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 import tan.configuration.TANConfigurationIDs;
 import tan.items.ItemTANCanteen;
 import tan.items.ItemTANMiscItems;
 import tan.items.ItemTANThermometer;
 import tan.items.ItemTANWaterBottle;
-import cpw.mods.fml.common.registry.GameRegistry;
 
+@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
 public class TANItems
 {
 	public static Item canteen;
@@ -16,33 +19,27 @@ public class TANItems
     public static Item waterBottle;
     public static Item miscItems;
     
-    public static void init()
+    @SubscribeEvent
+    private static void initializeItems(final RegistryEvent.Register<Item> event)
     {
-        initializeItems();
-        registerItems();
+    	event.getRegistry().registerAll(
+    	canteen = new ItemTANCanteen(TANConfigurationIDs.canteenID).setRegistryName(location("tan.canteen")),
+        thermometer = new ItemTANThermometer(TANConfigurationIDs.thermometerID).setRegistryName(location("tan.thermometer")),
+        waterBottle = new ItemTANWaterBottle(TANConfigurationIDs.waterBottleID).setRegistryName(location("tan.waterBottle")),
+        miscItems = new ItemTANMiscItems(TANConfigurationIDs.miscItemsID).setRegistryName(location("tan.miscItems"))
+        );
     }
     
-    private static void initializeItems()
-    {
-    	canteen = new ItemTANCanteen(TANConfigurationIDs.canteenID).setUnlocalizedName("tan.canteen");
-        thermometer = new ItemTANThermometer(TANConfigurationIDs.thermometerID).setUnlocalizedName("tan.thermometer");
-        waterBottle = new ItemTANWaterBottle(TANConfigurationIDs.waterBottleID).setUnlocalizedName("tan.waterBottle");
-        miscItems = new ItemTANMiscItems(TANConfigurationIDs.miscItemsID).setUnlocalizedName("tan.miscItems");
-    }
     
-    private static void registerItems()
-    {
-    	registerItem(canteen);
-        registerItem(thermometer);
-        registerItem(waterBottle);
-        registerItem(miscItems);
-    }
-    
-    public static void registerItem(Item item)
+ /**   public static void registerItem(Item item)
     {
         String name = item.getUnlocalizedName().replace("item.", "");
         
         GameRegistry.registerItem(item, name);
-        ContentRegistry.addItem(name, item);
-    }
+  ***///      ContentRegistry.addItem(name, item);
+    //}
+    public static ResourceLocation location(String name) {
+		return new ResourceLocation("compactxpbottles", name);
+
+	}
 }

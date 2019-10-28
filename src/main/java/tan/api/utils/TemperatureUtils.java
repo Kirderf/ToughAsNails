@@ -2,15 +2,16 @@ package tan.api.utils;
 
 import java.text.DecimalFormat;
 
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraft.world.biome.BiomeGenBase;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.MinecraftForge;
 import tan.api.temperature.TemperatureEvent;
 
 public class TemperatureUtils
 {
-    public static float getAimedTemperature(float environmentTemperature, World world, EntityPlayer player)
+    public static float getAimedTemperature(float environmentTemperature, World world, PlayerEntity player)
     {
         float aimedTemperature = environmentTemperature;
         
@@ -45,12 +46,10 @@ public class TemperatureUtils
             {
                 for (int iz = -2; iz <= 2; iz++)
                 {
-                    int blockID = world.getBlockId(x + ix, y + iy, z + iz);
-                    int metadata = world.getBlockMetadata(x + ix, y + iy, z + iz);
                     
-                    BiomeGenBase biome = world.getBiomeGenForCoords(x + ix, z + iz);
+                    Biome biome = world.getBiome(new BlockPos(x + ix, z + iz, iy));
 
-                    averageAimedEnvironmentTemperature += ((biome.temperature / 2) * 20) + 27;
+                    averageAimedEnvironmentTemperature += ((biome.getDefaultTemperature() / 2) * 20) + 27;
 
                     environmentDivider++;
                 }

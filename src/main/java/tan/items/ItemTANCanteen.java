@@ -3,25 +3,20 @@ package tan.items;
 import java.util.List;
 
 import net.minecraft.block.Block;
-import net.minecraft.client.renderer.texture.IconRegister;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.EnumAction;
+import net.minecraft.entity.ai.controller.MovementController.Action;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.fluid.Fluid;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.Icon;
-import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import net.minecraftforge.fluids.Fluid;
-import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
-import net.minecraftforge.fluids.ItemFluidContainer;
 import tan.ToughAsNails;
 import tan.api.thirst.TANDrinkInfo;
 import tan.api.utils.TANPlayerStatUtils;
 import tan.core.TANPotions;
 import tan.stats.ThirstStat;
 
-public class ItemTANCanteen extends ItemFluidContainer
+public class ItemTANCanteen extends net.minecraftforge.fluids.capability.ItemFluidContainer
 {
     public Icon canteenFilledIcon;
     public Icon canteenEmptyIcon;
@@ -40,13 +35,13 @@ public class ItemTANCanteen extends ItemFluidContainer
     }
     
     @Override
-    public boolean onItemUse(ItemStack itemStack, EntityPlayer player, World world, int x, int y, int z, int side, float hitVecX, float hitVecY, float hitVecZ)
+    public boolean onItemUse(ItemStack itemStack, PlayerEntity player, World world, int x, int y, int z, int side, float hitVecX, float hitVecY, float hitVecZ)
     {
         return false;
     }
     
     @Override
-    public ItemStack onEaten(ItemStack itemStack, World world, EntityPlayer player)
+    public ItemStack onEaten(ItemStack itemStack, World world, PlayerEntity player)
     {
         if (!player.capabilities.isCreativeMode)
         {
@@ -77,7 +72,7 @@ public class ItemTANCanteen extends ItemFluidContainer
     }
     
     @Override
-    public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player)
+    public ItemStack onItemRightClick(ItemStack itemStack, World world, PlayerEntity player)
     {
         MovingObjectPosition pos = this.getMovingObjectPositionFromPlayer(world, player, true);
 
@@ -121,26 +116,23 @@ public class ItemTANCanteen extends ItemFluidContainer
         return itemStack;
     }
 
-    @Override
-    public void addInformation(ItemStack itemStack, EntityPlayer player, List stringList, boolean showAdvancedInfo) 
+    public void addInformation(ItemStack itemStack, PlayerEntity player, List stringList, boolean showAdvancedInfo) 
     {
         FluidStack fluid = getFluid(itemStack);
         
-        if (fluid != null && fluid.amount > 0)
+        if (fluid != null && fluid.getAmount() > 0)
         {
-            String localizedName = fluid.getFluid().getLocalizedName();
+            ResourceLocation localizedName = fluid.getFluid().getRegistryName();
 
             stringList.add(localizedName);
         }
     }
     
-    @Override
-    public EnumAction getItemUseAction(ItemStack par1ItemStack)
+    public Action getItemUseAction(ItemStack par1ItemStack)
     {
-    	return EnumAction.drink;
+    	return Action.drink;
     }
     
-    @Override
     public int getMaxItemUseDuration(ItemStack par1ItemStack)
     {	
         return 48;

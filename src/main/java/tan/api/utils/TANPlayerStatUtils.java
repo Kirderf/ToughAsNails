@@ -1,12 +1,12 @@
 package tan.api.utils;
 
 import tan.api.TANStat;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
 
 public class TANPlayerStatUtils
 {
-    public static <Stat extends TANStat> Stat getPlayerStat(EntityPlayer player, Class<Stat> clazz)
+    public static <Stat extends TANStat> Stat getPlayerStat(PlayerEntity player, Class<Stat> clazz)
     {
         Stat stat = null;
         
@@ -14,9 +14,9 @@ public class TANPlayerStatUtils
         {
             stat = clazz.newInstance();
             
-            if (!player.getEntityData().hasKey("ToughAsNails")) player.getEntityData().setCompoundTag("ToughAsNails", new NBTTagCompound());
+            if (!player.getEntity().getPersistentData().contains("ToughAsNails")) player.getEntity().getPersistentData().put("ToughAsNails", new CompoundNBT());
             
-            stat.readNBT(player.getEntityData().getCompoundTag("ToughAsNails"));
+            stat.readNBT(player.getEntity().getPersistentData().getCompound("ToughAsNails"));
         }
         catch (Exception e)
         {
@@ -26,10 +26,10 @@ public class TANPlayerStatUtils
         return stat;
     }
 
-    public static void setPlayerStat(EntityPlayer player, TANStat stat)
+    public static void setPlayerStat(PlayerEntity player, TANStat stat)
     {       
-        if (!player.getEntityData().hasKey("ToughAsNails")) player.getEntityData().setCompoundTag("ToughAsNails", new NBTTagCompound());
+        if (!player.getEntity().getPersistentData().contains("ToughAsNails")) player.getEntity().getPersistentData().put("ToughAsNails", new CompoundNBT());
         
-        stat.writeNBT(player.getEntityData().getCompoundTag("ToughAsNails"));
+        stat.writeNBT(player.getEntity().getPersistentData().getCompound("ToughAsNails"));
     }
 }

@@ -1,25 +1,16 @@
 package tan.eventhandler.modifiers;
 
-import java.lang.reflect.Field;
-
-import org.lwjgl.input.Keyboard;
-
-import net.minecraft.block.material.Material;
-import net.minecraft.client.settings.GameSettings;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraftforge.event.ForgeSubscribe;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import tan.api.thirst.ThirstEvent;
-import tan.api.utils.TANPlayerStatUtils;
 import tan.stats.ThirstStat;
-import cpw.mods.fml.relauncher.ReflectionHelper;
 
 public class ThirstMovementEventHandler
 {
-    @ForgeSubscribe
+    @SubscribeEvent
     public void modifyThirst(ThirstEvent event)
     {
-        EntityPlayer player = event.player;
+        PlayerEntity player = event.player;
         
         ThirstStat thirstStat = event.thirstStat;
         
@@ -27,7 +18,7 @@ public class ThirstMovementEventHandler
         double y = player.posY;
         double z = player.posZ;
         
-        if (player.ridingEntity == null)
+        if (player.getRidingEntity() == null)
         {
             if (player.onGround)
             {

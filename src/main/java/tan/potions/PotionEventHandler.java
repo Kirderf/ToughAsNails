@@ -1,8 +1,10 @@
 package tan.potions;
 
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import tan.api.utils.TANPlayerStatUtils;
 import tan.core.TANPotions;
 import tan.stats.TemperatureStat;
@@ -10,14 +12,14 @@ import tan.stats.ThirstStat;
 
 public class PotionEventHandler
 {
-    @ForgeSubscribe
+    @SubscribeEvent
     public void onEntityLivingUpdate(LivingUpdateEvent event)
     {
-        if (event.entityLiving instanceof EntityPlayer)
+        if (event.getEntityLiving() instanceof PlayerEntity)
         {
-            EntityPlayer player = (EntityPlayer)event.entityLiving;
+        	PlayerEntity player = (PlayerEntity)event.getEntityLiving();
             
-            if (event.entityLiving.isPotionActive(TANPotions.waterPoisoning))
+            if (event.getEntityLiving().isPotionActive(TANPotions.waterPoisoning))
             {
                 ThirstStat thirstStat = TANPlayerStatUtils.getPlayerStat(player, ThirstStat.class);
                 

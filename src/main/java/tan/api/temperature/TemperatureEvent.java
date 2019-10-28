@@ -1,14 +1,13 @@
 package tan.api.temperature;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraftforge.event.Event;
+import net.minecraft.entity.player.PlayerEntity;
 
-public class TemperatureEvent extends Event
+public class TemperatureEvent extends net.minecraftforge.eventbus.api.Event
 {
-    public final EntityPlayer player;
+    public final PlayerEntity player;
     public float temperature;
     
-    public TemperatureEvent(EntityPlayer player, float temperature)
+    public TemperatureEvent(PlayerEntity player, float temperature)
     {
         this.player = player;
         this.temperature = temperature;
@@ -18,7 +17,7 @@ public class TemperatureEvent extends Event
     {
         public float rate;
         
-        public Rate(EntityPlayer player, float temperature, float rate)
+        public Rate(PlayerEntity player, float temperature, float rate)
         {
             super(player, temperature);
             

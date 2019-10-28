@@ -1,10 +1,13 @@
 package tan.textures;
 
+import com.mojang.blaze3d.platform.TextureUtil;
+
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.MinecraftGame;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.texture.TextureUtil;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.MathHelper;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import tan.api.utils.TANPlayerStatUtils;
 import tan.api.utils.TemperatureUtils;
@@ -14,7 +17,7 @@ public class TextureThermometer extends TextureAtlasSprite
 {
     public TextureThermometer()
     {
-        super("toughasnails:thermometer");
+        super(new ResourceLocation("toughasnails:thermometer"), 0, 0);
     }
 
     @Override
@@ -22,20 +25,20 @@ public class TextureThermometer extends TextureAtlasSprite
     {
         if (!this.framesTextureData.isEmpty())
         {
-            Minecraft minecraft = Minecraft.getMinecraft();
-            EntityPlayer player = minecraft.thePlayer;
+            Minecraft minecraft = Minecraft.getInstance();
+            PlayerEntity player = (PlayerEntity) player.getEntity();
 
             if (player != null)
             {
-                World world = player.worldObj;
+                World world = player.world;
 
-                int x = MathHelper.floor_double(player.posX);
-                int y = MathHelper.floor_double(player.posY);
-                int z = MathHelper.floor_double(player.posZ);
+                int x = MathHelper.floor(player.posX);
+                int y = MathHelper.floor(player.posY);
+                int z = MathHelper.floor(player.posZ);
 
                 TemperatureStat temperatureStat = TANPlayerStatUtils.getPlayerStat(player, TemperatureStat.class);
 
-                this.frameCounter = MathHelper.clamp_int((int)(((TemperatureUtils.getAimedTemperature(TemperatureUtils.getEnvironmentTemperature(player.worldObj, x, y, z), world, player) / 20F) - 1.35F) * this.getFrameCount()), 0, this.getFrameCount());
+                this.frameCounter = MathHelper.clamp((int)(((TemperatureUtils.getAimedTemperature(TemperatureUtils.getEnvironmentTemperature(player.world, x, y, z), world, player) / 20F) - 1.35F) * this.getFrameCount()), 0, this.getFrameCount());
             }
 
             TextureUtil.uploadTextureSub((int[])this.framesTextureData.get(this.frameCounter), this.width, this.height, this.originX, this.originY, false, false);

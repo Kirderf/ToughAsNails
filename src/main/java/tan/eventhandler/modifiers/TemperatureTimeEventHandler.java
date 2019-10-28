@@ -1,22 +1,22 @@
 package tan.eventhandler.modifiers;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.MathHelper;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import net.minecraftforge.event.ForgeSubscribe;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import tan.api.temperature.TemperatureEvent;
 
 public class TemperatureTimeEventHandler
 {
-    @ForgeSubscribe
+    @SubscribeEvent
     public void modifyTemperature(TemperatureEvent event)
     {
-        EntityPlayer player = event.player;
-        World world = player.worldObj;
+        PlayerEntity player = event.player;
+        World world = player.world;
         
-        int x = MathHelper.floor_double(player.posX);
-        int y = MathHelper.floor_double(player.posY);
-        int z = MathHelper.floor_double(player.posZ);
+        int x = MathHelper.floor(player.posX);
+        int y = MathHelper.floor(player.posY);
+        int z = MathHelper.floor(player.posZ);
         
         if (isNight(world)) 
         {

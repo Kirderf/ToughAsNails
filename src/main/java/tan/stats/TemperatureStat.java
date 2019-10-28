@@ -2,10 +2,10 @@ package tan.stats;
 
 import java.text.DecimalFormat;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.MathHelper;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import tan.api.TANStat;
@@ -21,21 +21,21 @@ public class TemperatureStat extends TANStat
     public int temperatureTimer = 0;
     
     @Override
-    public void update(EntityPlayer player)
+    public void update(PlayerEntity player)
     {    
-        World world = player.worldObj;
+        World world = player.world;
         
-        if (player.capabilities.isCreativeMode) return;
+        if (player.abilities.isCreativeMode) return;
         
-        int x = MathHelper.floor_double(player.posX);
-        int y = MathHelper.floor_double(player.posY);
-        int z = MathHelper.floor_double(player.posZ);
+        int x = MathHelper.floor(player.posX);
+        int y = MathHelper.floor(player.posY);
+        int z = MathHelper.floor(player.posZ);
 
         float environmentTemperature = TemperatureUtils.getEnvironmentTemperature(world, x, y, z);
         
         float aimedTemperature = TemperatureUtils.getAimedTemperature(environmentTemperature, world, player);
         
-        int difficultySetting = player.worldObj.difficultySetting;
+        int difficultySetting = player.world.getDifficulty().getId();
         
         int ratemodifier;
         
@@ -136,26 +136,26 @@ public class TemperatureStat extends TANStat
     }
     
     @Override
-    public void readNBT(NBTTagCompound tanData)
+    public void readNBT(CompoundNBT tanData)
     {
-        if (tanData.hasKey("temperature"))
+        if (tanData.contains("temperature"))
         {
-            NBTTagCompound temperatureCompound = tanData.getCompoundTag("temperature");
+            CompoundNBT temperatureCompound = tanData.getCompound("temperature");
 
             temperatureLevel = temperatureCompound.getFloat("temperatureLevel");
-            temperatureTimer = temperatureCompound.getInteger("temperatureTimer");
+            temperatureTimer = temperatureCompound.getInt("temperatureTimer");
         }
     }
 
     @Override
-    public void writeNBT(NBTTagCompound tanData)
+    public void writeNBT(CompoundNBT tanData)
     {
-        NBTTagCompound temperatureCompound = new NBTTagCompound();
+        CompoundNBT temperatureCompound = new CompoundNBT();
         
-        temperatureCompound.setFloat("temperatureLevel", MathHelper.clamp_float(temperatureLevel, 27F, 47F));
-        temperatureCompound.setInteger("temperatureTimer", temperatureTimer);
+        temperatureCompound.putFloat("temperatureLevel", MathHelper.clamp(temperatureLevel, 27F, 47F));
+        temperatureCompound.putInt("temperatureTimer", temperatureTimer);
         
-        tanData.setCompoundTag("temperature", temperatureCompound);
+        tanData.put("temperature", temperatureCompound);
     }
     
     public static String getTemperatureSymbol()

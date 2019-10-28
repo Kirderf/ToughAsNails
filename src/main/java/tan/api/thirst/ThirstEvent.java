@@ -1,16 +1,15 @@
 package tan.api.thirst;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraftforge.event.Event;
+import net.minecraft.entity.player.PlayerEntity;
 import tan.stats.ThirstStat;
 
-public class ThirstEvent extends Event
+public class ThirstEvent extends net.minecraftforge.eventbus.api.Event
 {
-    public final EntityPlayer player;
+    public final PlayerEntity player;
     
     public ThirstStat thirstStat;
     
-    public ThirstEvent(EntityPlayer player, ThirstStat thirstStat)
+    public ThirstEvent(PlayerEntity player, ThirstStat thirstStat)
     {
         this.player = player;
         

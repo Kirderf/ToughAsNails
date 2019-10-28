@@ -1,11 +1,13 @@
 package tan;
 
-import cpw.mods.fml.common.ObfuscationReflectionHelper;
-import cpw.mods.fml.relauncher.ReflectionHelper;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.ReloadableResourceManager;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.network.NetworkRegistry;
 import tan.configuration.TANConfiguration;
 import tan.core.CreativeTabTAN;
 import tan.core.TANArmour;
@@ -23,31 +25,23 @@ import tan.overlay.RenderAirOverlay;
 import tan.overlay.RenderTemperatureOverlay;
 import tan.overlay.RenderTemperatureVignettes;
 import tan.overlay.RenderThirstOverlay;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.SidedProxy;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
-import cpw.mods.fml.common.event.FMLPostInitializationEvent;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.network.NetworkMod;
-import cpw.mods.fml.common.network.NetworkRegistry;
 
-@Mod(modid = "ToughAsNails", name = "Tough As Nails", dependencies="required-after:Forge@[1.42.666.42.1,)")
-@NetworkMod(channels = { "ToughAsNails" }, packetHandler = PacketHandler.class, clientSideRequired = true, serverSideRequired = false)
+@Mod(value = "ToughAsNails")//, name = "Tough As Nails", dependencies="required-after:Forge@[1.42.666.42.1,)")
 public class ToughAsNails
 {
-    @Instance("ToughAsNails")
-    public static ToughAsNails instance;
-    
-    @SidedProxy(clientSide="tan.ClientProxy", serverSide="tan.CommonProxy")
-    public static CommonProxy proxy;
-    
+    public static ToughAsNails instance;   
     public static CreativeTabs tabToughAsNails;
     public static String configPath;
     
-    @EventHandler
-    public void preInit(FMLPreInitializationEvent event)
+    public ToughAsNails() {
+		instance = this;
+		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+		FMLJavaModLoadingContext.get().getModEventBus().addListener(this::clientRegisteries);
+
+		MinecraftForge.EVENT_BUS.register(this);
+	}
+    
+    public void setup(final FMLCommonSetupEvent event)
     {
         configPath = event.getModConfigurationDirectory() + "/toughasnails/";
         TANConfiguration.init(configPath);
@@ -64,27 +58,15 @@ public class ToughAsNails
         
         MinecraftForge.EVENT_BUS.register(new StatUpdateEventHandler());
         
-        if (proxy instanceof ClientProxy)
-        {
-            ReloadableResourceManager resourceManager = ObfuscationReflectionHelper.getPrivateValue(Minecraft.class, Minecraft.getMinecraft(), new String[]{"mcResourceManager"});
-
-            resourceManager.registerReloadListener(new LocalizationHandler());
-
-            MinecraftForge.EVENT_BUS.register(new RenderTemperatureOverlay());
-            MinecraftForge.EVENT_BUS.register(new RenderTemperatureVignettes());
-            MinecraftForge.EVENT_BUS.register(new RenderThirstOverlay());
-            MinecraftForge.EVENT_BUS.register(new RenderAirOverlay());
-        }
+ 
     }
     
-    @EventHandler
-    public void init(FMLInitializationEvent event)
+    public void clientRegisteries(final FMLClientSetupEvent event)
     {
-        NetworkRegistry.instance().registerConnectionHandler(new ConnectionHandler());
+        MinecraftForge.EVENT_BUS.register(new RenderTemperatureOverlay());
+        MinecraftForge.EVENT_BUS.register(new RenderTemperatureVignettes());
+        MinecraftForge.EVENT_BUS.register(new RenderThirstOverlay());
+        MinecraftForge.EVENT_BUS.register(new RenderAirOverlay());
     }
     
-    @EventHandler
-    public void postInit(FMLPostInitializationEvent event)
-    {
-    }
 }

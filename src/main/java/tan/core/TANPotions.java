@@ -5,6 +5,8 @@ import java.lang.reflect.Modifier;
 import java.util.logging.Level;
 
 import net.minecraft.potion.Potion;
+import net.minecraft.potion.Potions;
+import net.minecraft.util.datafix.fixes.PotionItems;
 import net.minecraftforge.common.MinecraftForge;
 import tan.potions.PotionEventHandler;
 import tan.potions.PotionWaterPoisoning;

@@ -1,17 +1,17 @@
 package tan.eventhandler;
 
+import cpw.mods.fml.common.network.Player;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import net.minecraftforge.fml.network.PacketDispatcher;
 import tan.api.utils.TANPlayerStatUtils;
 import tan.network.PacketTypeHandler;
 import tan.network.packet.PacketSendStats;
 import tan.stats.TemperatureStat;
 import tan.stats.ThirstStat;
-import cpw.mods.fml.common.network.PacketDispatcher;
-import cpw.mods.fml.common.network.Player;
 
 public class StatUpdateEventHandler
 {

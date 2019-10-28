@@ -1,18 +1,17 @@
 package tan.eventhandler.modifiers;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemArmor;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.event.ForgeSubscribe;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import tan.api.temperature.TemperatureEvent;
 import tan.api.temperature.TemperatureRegistry;
 
 public class TemperatureArmourEventHandler
 {
-    @ForgeSubscribe
+    @SubscribeEvent
     public void modifyTemperature(TemperatureEvent event)
     {
-        EntityPlayer player = event.player;
+        PlayerEntity player = event.player;
         
         ItemStack helmetStack = player.inventory.armorInventory[3];
         ItemStack chestplateStack = player.inventory.armorInventory[2];
@@ -27,10 +26,10 @@ public class TemperatureArmourEventHandler
         event.temperature += (helmetModifier + chestplateModifier + leggingsModifier + bootsModifier);
     }
     
-    @ForgeSubscribe
+    @SubscribeEvent
     public void modifyRate(TemperatureEvent.Rate event)
     {
-        EntityPlayer player = event.player;
+        PlayerEntity player = event.player;
         
         ItemStack helmetStack = player.inventory.armorInventory[3];
         ItemStack chestplateStack = player.inventory.armorInventory[2];

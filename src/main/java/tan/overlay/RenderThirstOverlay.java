@@ -22,7 +22,7 @@ public class RenderThirstOverlay extends RenderTANOverlay
         
         bindTexture(overlayLocation);
         {
-            if (!minecraft.thePlayer.capabilities.isCreativeMode)
+            if (!minecraft.player.capabilities.isCreativeMode)
             {
                 renderThirst();
             }
@@ -38,7 +38,7 @@ public class RenderThirstOverlay extends RenderTANOverlay
             int left = scaledRes.getScaledWidth() / 2 + 91;
             int top = scaledRes.getScaledHeight() - 49;
 
-            ThirstStat thirstStat = TANPlayerStatUtils.getPlayerStat(minecraft.thePlayer, ThirstStat.class);
+            ThirstStat thirstStat = TANPlayerStatUtils.getPlayerStat(minecraft.player, ThirstStat.class);
             
             int level = thirstStat.thirstLevel;
 
@@ -50,7 +50,7 @@ public class RenderThirstOverlay extends RenderTANOverlay
                 int icon = 16;
                 byte backgound = 0;
 
-                if (minecraft.thePlayer.isPotionActive(TANPotions.waterPoisoning.id))
+                if (minecraft.player.isPotionActive(TANPotions.waterPoisoning.id))
                 {
                     icon += 36;
                     backgound = 13;

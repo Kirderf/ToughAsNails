@@ -3,26 +3,26 @@ package tan.eventhandler.modifiers;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.util.MathHelper;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
-import net.minecraftforge.event.ForgeSubscribe;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import tan.api.temperature.TemperatureEvent;
 import tan.api.temperature.TemperatureRegistry;
 
 public class TemperatureSourceEventHandler
 {
-    @ForgeSubscribe
+    @SubscribeEvent
     public void modifyTemperature(TemperatureEvent event)
     {
         ArrayList<Float> temperatureModifiers = new ArrayList<Float>();
         
-        EntityPlayer player = event.player;
-        World world = player.worldObj;
+        PlayerEntity player = event.player;
+        World world = player.world;
         
-        int x = MathHelper.floor_double(player.posX);
-        int y = MathHelper.floor_double(player.posY);
-        int z = MathHelper.floor_double(player.posZ);
+        int x = MathHelper.floor(player.posX);
+        int y = MathHelper.floor(player.posY);
+        int z = MathHelper.floor(player.posZ);
         
         for (int ix = -2; ix <= 2; ix++)
         {
@@ -59,17 +59,17 @@ public class TemperatureSourceEventHandler
         }
     }
     
-    @ForgeSubscribe
+    @SubscribeEvent
     public void modifyRate(TemperatureEvent.Rate event)
     {
         ArrayList<Float> rateModifiers = new ArrayList<Float>();
         
-        EntityPlayer player = event.player;
-        World world = player.worldObj;
+        PlayerEntity player = event.player;
+        World world = player.world;
         
-        int x = MathHelper.floor_double(player.posX);
-        int y = MathHelper.floor_double(player.posY);
-        int z = MathHelper.floor_double(player.posZ);
+        int x = MathHelper.floor(player.posX);
+        int y = MathHelper.floor(player.posY);
+        int z = MathHelper.floor(player.posZ);
         
         for (int ix = -2; ix <= 2; ix++)
         {

@@ -1,31 +1,31 @@
 package tan.handler;
 
-import net.minecraft.entity.player.EntityPlayer;
+import cpw.mods.fml.common.network.IConnectionHandler;
+import cpw.mods.fml.common.network.Player;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.INetworkManager;
 import net.minecraft.network.NetLoginHandler;
 import net.minecraft.network.packet.NetHandler;
 import net.minecraft.network.packet.Packet1Login;
 import net.minecraft.server.MinecraftServer;
+import net.minecraftforge.fml.network.PacketDispatcher;
 import tan.api.utils.TANPlayerStatUtils;
 import tan.network.PacketTypeHandler;
 import tan.network.packet.PacketSendStats;
 import tan.stats.TemperatureStat;
 import tan.stats.ThirstStat;
-import cpw.mods.fml.common.network.IConnectionHandler;
-import cpw.mods.fml.common.network.PacketDispatcher;
-import cpw.mods.fml.common.network.Player;
 
 public class ConnectionHandler implements IConnectionHandler
 {
     @Override
-    public void playerLoggedIn(Player player, NetHandler netHandler, INetworkManager manager)
+    public void playerLoggedIn(PlayerEntity player, NetHandler netHandler, INetworkManager manager)
     {
-            EntityPlayer entityPlayer = (EntityPlayer)player;
+            PlayerEntity PlayerEntity = (PlayerEntity)player;
             
-            TemperatureStat temperatureStat = TANPlayerStatUtils.getPlayerStat(entityPlayer, TemperatureStat.class);
-            ThirstStat thirstStat = TANPlayerStatUtils.getPlayerStat(entityPlayer, ThirstStat.class);
+            TemperatureStat temperatureStat = TANPlayerStatUtils.getPlayerStat(PlayerEntity, TemperatureStat.class);
+            ThirstStat thirstStat = TANPlayerStatUtils.getPlayerStat(PlayerEntity, ThirstStat.class);
             
-            PacketDispatcher.sendPacketToPlayer(PacketTypeHandler.populatePacket(new PacketSendStats(entityPlayer)), (Player)player);
+            PacketDispatcher.sendPacketToPlayer(PacketTypeHandler.populatePacket(new PacketSendStats(PlayerEntity)), (Player)player);
     }
 
     @Override
