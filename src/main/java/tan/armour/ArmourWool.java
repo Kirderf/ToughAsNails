@@ -20,13 +20,11 @@ public class ArmourWool extends ItemArmor
         this.setCreativeTab(ToughAsNails.tabToughAsNails);
     }
 
-    @Override
     public boolean getIsRepairable(ItemStack itemToRepair, ItemStack itemToRepairWith)
     {
         return false;
     }
 
-    @Override
     public String getArmorTexture(ItemStack stack, Entity entity, int slot, String type) 
     {
         if (stack.itemID == TANArmour.helmetWool.itemID || stack.itemID == TANArmour.chestplateWool.itemID || stack.itemID == TANArmour.bootsWool.itemID)
@@ -37,7 +35,6 @@ public class ArmourWool extends ItemArmor
         return null;
     }
 
-    @Override
     public void registerIcons(IconRegister iconRegister)
     {
         if (textureID == 0) { itemIcon = iconRegister.registerIcon("toughasnails:cloth_helmet"); }

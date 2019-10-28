@@ -1,6 +1,7 @@
 package tan;
 
 import net.minecraft.item.ItemGroup;
+import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -27,6 +28,7 @@ public class ToughAsNails {
 	public static ToughAsNails instance;
 	public static final ItemGroup tabToughAsNails = new CreativeTabTAN("ToughAsNails");
 	public static String configPath;
+	public static ForgeConfigSpec config;
 
 	public ToughAsNails() {
 		instance = this;
@@ -38,6 +40,7 @@ public class ToughAsNails {
 
 	public void setup(final FMLCommonSetupEvent event) {
 		// configPath = event.getModConfigurationDirectory() + "/toughasnails/";
+		config.con
 		TANConfiguration.init(configPath);
 
 		TANPotions.init();
