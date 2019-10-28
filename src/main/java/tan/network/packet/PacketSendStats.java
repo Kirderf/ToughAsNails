@@ -4,14 +4,12 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.INetworkManager;
 import tan.api.utils.TANPlayerStatUtils;
 import tan.network.PacketTypeHandler;
 import tan.stats.TemperatureStat;
 import tan.stats.ThirstStat;
-import cpw.mods.fml.common.network.Player;
 
 public class PacketSendStats extends PacketTAN
 {
@@ -28,7 +26,7 @@ public class PacketSendStats extends PacketTAN
         super(PacketTypeHandler.sendStats);
     }
     
-    public PacketSendStats(EntityPlayer player)
+    public PacketSendStats(PlayerEntity player)
     {
         super(PacketTypeHandler.sendStats);
         
@@ -69,11 +67,11 @@ public class PacketSendStats extends PacketTAN
     }
 
     @Override
-    public void execute(INetworkManager network, Player player) 
+    public void execute(INetworkManager network, PlayerEntity player) 
     {
-        EntityPlayer entityPlayer = (EntityPlayer)player;
+    	PlayerEntity entityPlayer = (PlayerEntity)player;
 
-        if (entityPlayer.worldObj.isRemote)
+        if (entityPlayer.world.isRemote)
         {
             TemperatureStat temperatureStat = TANPlayerStatUtils.getPlayerStat(entityPlayer, TemperatureStat.class);
             ThirstStat thirstStat = TANPlayerStatUtils.getPlayerStat(entityPlayer, ThirstStat.class);

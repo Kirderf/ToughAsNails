@@ -3,39 +3,34 @@ package tan.configuration;
 import java.io.File;
 import java.util.logging.Level;
 
-import net.minecraftforge.common.Configuration;
-import net.minecraftforge.common.Property;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.FMLLog;
+import net.minecraftforge.common.ForgeConfigSpec;
+import net.minecraftforge.fml.common.Mod;
 
-public class TANConfigurationTemperature
-{
-    public static Configuration config;
-    
-    public static String temperatureType;
+@Mod.EventBusSubscriber
+public class TANConfigurationTemperature {
+	private static final ForgeConfigSpec.Builder builder = null;
+	public static ForgeConfigSpec config;
 
-    public static void init(File configFile)
-    {
-        config = new Configuration(configFile);
+	public static String temperatureType;
 
-        try
-        {
-            config.load();
+	public static void init(File configFile) {
+		config = new ForgeConfigSpec(configFile);
 
-            temperatureType = config.get("Temperature", "Temperature Scale", "Celsius", "The temperature scale to use, supports Celsius, Fahrenheit & Kelvin").getString();
+		try {
+			config.load();
 
-            FMLCommonHandler.instance().getFMLLogger().log(Level.INFO, "[ToughAsNails] Generated Temperature Config!");
-        }
-        catch (Exception e)
-        {
-            FMLLog.log(Level.SEVERE, e, "Tough As Nails has had a problem loading its configuration");
-        }
-        finally
-        {
-            if (config.hasChanged()) 
-            {
-                config.save();
-            }
-        }
-    }
+			temperatureType = config.get("Temperature", "Temperature Scale", "Celsius",
+					"The temperature scale to use, supports Celsius, Fahrenheit & Kelvin").getString();
+
+			FMLCommonHandler.instance().getFMLLogger().log(Level.INFO, "[ToughAsNails] Generated Temperature Config!");
+		} catch (Exception e) {
+			FMLLog.log(Level.SEVERE, e, "Tough As Nails has had a problem loading its configuration");
+		} finally {
+			if (config.hasChanged()) {
+				config.save();
+			}
+		}
+	}
 }

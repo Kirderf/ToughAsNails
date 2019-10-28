@@ -1,28 +1,27 @@
 package tan.overlay;
 
-import net.minecraft.client.gui.ScaledResolution;
+import org.lwjgl.opengl.GL11;
+
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
-import net.minecraftforge.event.ForgeSubscribe;
-
-import org.lwjgl.opengl.GL11;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 public class RenderAirOverlay
 {
-    @ForgeSubscribe
+    @SubscribeEvent
     public void render(RenderGameOverlayEvent.Pre event)
     {
-        if (event.type == ElementType.AIR)
+        if (event.getType() == ElementType.AIR)
         {
             GL11.glPushMatrix();
             GL11.glTranslatef(0.0F, -10.0F, 0.0F);
         }
     }
     
-    @ForgeSubscribe
+    @SubscribeEvent
     public void render(RenderGameOverlayEvent.Post event)
     {
-        if (event.type == ElementType.AIR)
+        if (event.getType() == ElementType.AIR)
         {
             GL11.glPopMatrix();
         }

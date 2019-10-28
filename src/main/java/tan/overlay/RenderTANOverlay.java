@@ -2,23 +2,23 @@ package tan.overlay;
 
 import java.util.Random;
 
+import org.lwjgl.opengl.GL11;
+
+import cpw.mods.fml.client.FMLClientHandler;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.client.renderer.texture.TextureManager;
+import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
-import net.minecraftforge.client.event.RenderGameOverlayEvent.ElementType;
-import net.minecraftforge.event.ForgeSubscribe;
-
-import org.lwjgl.opengl.GL11;
-
-import cpw.mods.fml.client.FMLClientHandler;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.loading.FMLCommonLaunchHandler;
 
 public abstract class RenderTANOverlay
 {
-    public Minecraft minecraft = Minecraft.getMinecraft();
+    public Minecraft minecraft = Minecraft.getInstance();
     public Random rand = new Random();
     
     public FontRenderer fontRenderer = minecraft.fontRenderer;
@@ -26,11 +26,11 @@ public abstract class RenderTANOverlay
     
     public ResourceLocation overlayLocation = new ResourceLocation("toughasnails:textures/overlay/overlay.png");
     
-    public NBTTagCompound tanData;
+    public CompoundNBT tanData;
     
     public int updateCounter;
 
-    @ForgeSubscribe
+    @SubscribeEvent
     public void render(RenderGameOverlayEvent.Pre event)
     {
         scaledRes = event.resolution;
@@ -46,7 +46,7 @@ public abstract class RenderTANOverlay
     
     public static void bindTexture(ResourceLocation resourceLocation)
     {
-        FMLClientHandler.instance().getClient().renderEngine.bindTexture(resourceLocation);
+    	FMLCommonLaunchHandler..instance().getClient().renderEngine.bindTexture(resourceLocation);
     }
     
     public void drawStringWithBorder(FontRenderer fontrenderer, String string, int x, int y, int borderColour, int colour)
@@ -62,7 +62,7 @@ public abstract class RenderTANOverlay
     {
         float f = 0.00390625F;
         float f1 = 0.00390625F;
-        Tessellator tessellator = Tessellator.instance;
+        Tessellator tessellator = Tessellator.getInstance();
         tessellator.startDrawingQuads();
         tessellator.addVertexWithUV((double)(x + 0), (double)(y + height), 0, (double)((float)(u + 0) * f), (double)((float)(v + height) * f1));
         tessellator.addVertexWithUV((double)(x + width), (double)(y + height), 0, (double)((float)(u + width) * f), (double)((float)(v + height) * f1));

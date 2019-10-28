@@ -23,7 +23,7 @@ public class TextureThermometer extends TextureAtlasSprite
     @Override
     public void updateAnimation()
     {
-        if (!this.framesTextureData.isEmpty())
+        if (!this.frames.equals(null)) //.framesTextureData.isEmpty())
         {
             Minecraft minecraft = Minecraft.getInstance();
             PlayerEntity player = (PlayerEntity) player.getEntity();
@@ -41,7 +41,7 @@ public class TextureThermometer extends TextureAtlasSprite
                 this.frameCounter = MathHelper.clamp((int)(((TemperatureUtils.getAimedTemperature(TemperatureUtils.getEnvironmentTemperature(player.world, x, y, z), world, player) / 20F) - 1.35F) * this.getFrameCount()), 0, this.getFrameCount());
             }
 
-            TextureUtil.uploadTextureSub((int[])this.framesTextureData.get(this.frameCounter), this.width, this.height, this.originX, this.originY, false, false);
+            TextureUtil.uploadTextureSub(this.frames, this.width, this.height, this.x, this.y);
         }
     }
 }

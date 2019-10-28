@@ -4,13 +4,11 @@ import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.logging.Level;
 
+import cpw.mods.fml.common.FMLCommonHandler;
 import net.minecraft.potion.Potion;
-import net.minecraft.potion.Potions;
-import net.minecraft.util.datafix.fixes.PotionItems;
 import net.minecraftforge.common.MinecraftForge;
 import tan.potions.PotionEventHandler;
 import tan.potions.PotionWaterPoisoning;
-import cpw.mods.fml.common.FMLCommonHandler;
 
 public class TANPotions
 {

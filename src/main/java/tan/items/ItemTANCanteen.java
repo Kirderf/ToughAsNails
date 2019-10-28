@@ -2,17 +2,23 @@ package tan.items;
 
 import java.util.List;
 
+import javax.swing.Icon;
+
 import net.minecraft.block.Block;
 import net.minecraft.entity.ai.controller.MovementController.Action;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.Fluid;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.ItemFluidContainer;
 import tan.ToughAsNails;
 import tan.api.thirst.TANDrinkInfo;
 import tan.api.utils.TANPlayerStatUtils;
+import tan.core.CreativeTabTAN;
 import tan.core.TANPotions;
 import tan.stats.ThirstStat;
 
@@ -23,35 +29,30 @@ public class ItemTANCanteen extends net.minecraftforge.fluids.capability.ItemFlu
     
     private ThirstStat thirstStat;
     
-    private Fluid canteenFluid;
+    private static ItemFluidContainer canteenFluid;
     
-    public ItemTANCanteen(int id)
+    public ItemTANCanteen()
     {
-        super(id);
-        this.maxStackSize = 1;
-        this.capacity = 250;  /*FluidContainerRegistry.BUCKET_VOLUME / 5*/
-        this.setMaxDamage(5);
-        this.setCreativeTab(ToughAsNails.tabToughAsNails);
+        super(new Item.Properties().group(ToughAsNails.tabToughAsNails).maxStackSize(1).maxDamage(5).containerItem(canteenFluid), 250);  /*FluidContainerRegistry.BUCKET_VOLUME / 5*/
+        
     }
     
-    @Override
     public boolean onItemUse(ItemStack itemStack, PlayerEntity player, World world, int x, int y, int z, int side, float hitVecX, float hitVecY, float hitVecZ)
     {
         return false;
     }
     
-    @Override
     public ItemStack onEaten(ItemStack itemStack, World world, PlayerEntity player)
     {
-        if (!player.capabilities.isCreativeMode)
+        if (!player.isCreative())
         {
             drain(itemStack, 50, true);
             itemStack.damageItem(1, player);
         }
 
-        if (itemStack.getItemDamage() >= itemStack.getMaxDamage())
+        if (itemStack.getItem().getDamage(itemStack) >= itemStack.getMaxDamage())
         {
-            itemStack.setItemDamage(0);
+            itemStack.setDamage(0);
         }
 
         if (!world.isRemote)
@@ -71,7 +72,6 @@ public class ItemTANCanteen extends net.minecraftforge.fluids.capability.ItemFlu
         return itemStack;
     }
     
-    @Override
     public ItemStack onItemRightClick(ItemStack itemStack, World world, PlayerEntity player)
     {
         MovingObjectPosition pos = this.getMovingObjectPositionFromPlayer(world, player, true);
@@ -93,7 +93,7 @@ public class ItemTANCanteen extends net.minecraftforge.fluids.capability.ItemFlu
                     if (blockFluid == FluidRegistry.WATER)
                     {
                         this.fill(itemStack, new FluidStack(blockFluid, capacity), true);
-                        itemStack.setItemDamage(0);
+                        itemStack.setDamage(0);
                         world.setBlockToAir(x, y, z);
                         
                         return itemStack;

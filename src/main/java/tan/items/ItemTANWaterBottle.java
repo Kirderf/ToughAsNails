@@ -23,11 +23,14 @@ public class ItemTANWaterBottle extends Food
     public ItemTANWaterBottle()
     {
        // super(0, 0.0F, false, true, false, null);
-       this.food = Builder.this.hunger(0).saturation(0).build();
+      //  super(new Item.Properties().group(ToughAsNails.tabToughAsNails).maxStackSize(1));
+        super(new Food.Builder().hunger(0).build())
+        /*FluidContainerRegistry.BUCKET_VOLUME / 5*/
+       this.setFood(Builder.this.hunger(0).saturation(0).build());
         this.maxStackSize = 1;
-        setMaxDamage(0);
     	setHasSubtypes(true);
         this.setCreativeTab(ToughAsNails.tabToughAsNails);
+        
     }
     
     public EnumAction getItemUseAction(ItemStack par1ItemStack)
@@ -42,14 +45,14 @@ public class ItemTANWaterBottle extends Food
     
 	public ItemStack onEaten(ItemStack itemstack, World world, PlayerEntity player)
     {
-		--itemstack.stackSize;
+		itemstack.setCount(itemstack.getCount()-1);
 		
-        world.playSoundAtEntity(player, "random.burp", 0.5F, world.rand.nextFloat() * 0.1F + 0.9F);
+        world.playSound(player, "random.burp", 0.5F, world.rand.nextFloat() * 0.1F + 0.9F);
         this.onEaten(itemstack, world, player);
 
 		if (!player.inventory.addItemStackToInventory(new ItemStack(Item.glassBottle)))
 		{
-            player.dropItem(new ItemStack(Item.glassBottle.itemID, 1, 0));
+            player.dropItem(new ItemStack(Item.glassBottle.itemID, 1, 0), false);
 		}
         
         return itemstack;
@@ -90,5 +93,13 @@ public class ItemTANWaterBottle extends Food
 		for(int meta = 0; meta < items.length; ++meta) {
 			subTypes.add(new ItemStack(itemId, 1, meta));
 		}
+	}
+
+	public Food getFood() {
+		return food;
+	}
+
+	public void setFood(Food food) {
+		this.food = food;
 	}
 }

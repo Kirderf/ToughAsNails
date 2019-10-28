@@ -18,14 +18,14 @@ public class TANItems
     public static Item thermometer;
     public static Item waterBottle;
     public static Item miscItems;
-    
+
     @SubscribeEvent
-    private static void initializeItems(final RegistryEvent.Register<Item> event)
+    public static void initializeItems(final RegistryEvent.Register<Item> event)
     {
     	event.getRegistry().registerAll(
-    	canteen = new ItemTANCanteen(TANConfigurationIDs.canteenID).setRegistryName(location("tan.canteen")),
+    	canteen = new ItemTANCanteen().setRegistryName(location("tan.canteen")),
         thermometer = new ItemTANThermometer(TANConfigurationIDs.thermometerID).setRegistryName(location("tan.thermometer")),
-        waterBottle = new ItemTANWaterBottle(TANConfigurationIDs.waterBottleID).setRegistryName(location("tan.waterBottle")),
+        waterBottle = new ItemTANWaterBottle().setRegistryName(location("tan.waterBottle")),
         miscItems = new ItemTANMiscItems(TANConfigurationIDs.miscItemsID).setRegistryName(location("tan.miscItems"))
         );
     }

@@ -5,9 +5,11 @@ import java.util.logging.Level;
 
 import net.minecraft.item.Item;
 import net.minecraftforge.common.Configuration;
+import net.minecraftforge.fml.common.Mod;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.FMLLog;
 
+@Mod.EventBusSubscriber
 public class TANConfigurationIDs
 {
     public static Configuration config;

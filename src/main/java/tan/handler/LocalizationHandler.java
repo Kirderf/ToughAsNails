@@ -1,23 +1,13 @@
 package tan.handler;
 
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.common.ObfuscationReflectionHelper;
-import cpw.mods.fml.common.registry.LanguageRegistry;
-import cpw.mods.fml.relauncher.ReflectionHelper;
-import net.minecraft.block.Block;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.resources.Locale;
-import net.minecraft.client.resources.LanguageManager;
-import net.minecraft.client.resources.ResourceManager;
-import net.minecraft.client.resources.ResourceManagerReloadListener;
-import net.minecraft.util.StatCollector;
-import net.minecraft.util.StringTranslate;
-
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Properties;
+
+import net.minecraft.block.Block;
+import net.minecraft.client.resources.ResourceManager;
+import net.minecraft.client.resources.ResourceManagerReloadListener;
+import net.minecraft.util.StringTranslate;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 public class LocalizationHandler implements ResourceManagerReloadListener
 {

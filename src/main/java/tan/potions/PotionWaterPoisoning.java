@@ -1,13 +1,15 @@
 package tan.potions;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Potion;
 import net.minecraft.util.ResourceLocation;
 
 public class PotionWaterPoisoning extends Potion {
-	public PotionWaterPoisoning(int id, boolean isBad, int colour) {
-		super(id, isBad, colour);
-		this.setIconIndex(1, 0);
+	public PotionWaterPoisoning() {
+		new Potion("Water Posioning",new EffectInstance(EffectInstance.read(new CompoundNBT())));
+		
 	}
 
 	public int getStatusIconIndex() {

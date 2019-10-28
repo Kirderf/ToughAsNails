@@ -1,11 +1,10 @@
 package tan.eventhandler;
 
-import cpw.mods.fml.common.network.Player;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.World;
-import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.living.LivingEvent.LivingUpdateEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.network.PacketDispatcher;
 import tan.api.utils.TANPlayerStatUtils;
 import tan.network.PacketTypeHandler;
@@ -15,15 +14,15 @@ import tan.stats.ThirstStat;
 
 public class StatUpdateEventHandler
 {
-    @ForgeSubscribe
+    @SubscribeEvent
     public void onLivingUpdate(LivingUpdateEvent event)
     {
-        EntityLivingBase entityLiving = event.entityLiving;
-        World world = entityLiving.worldObj;
+        LivingEntity entityLiving = event.getEntityLiving();
+        World world = entityLiving.world;
         
-        if (entityLiving instanceof EntityPlayer)
+        if (entityLiving instanceof PlayerEntity)
         {
-            EntityPlayer player = (EntityPlayer)entityLiving;
+        	PlayerEntity player = (PlayerEntity)entityLiving;
             
             if (!world.isRemote)
             {
@@ -36,7 +35,7 @@ public class StatUpdateEventHandler
                 TANPlayerStatUtils.setPlayerStat(player, temperatureStat);
                 TANPlayerStatUtils.setPlayerStat(player, thirstStat);
                 
-                PacketDispatcher.sendPacketToPlayer(PacketTypeHandler.populatePacket(new PacketSendStats(player)), (Player)player);
+                PacketDispatcher.sendPacketToPlayer(PacketTypeHandler.populatePacket(new PacketSendStats(player)), (PlayerEntity)player);
             }
         }
     }

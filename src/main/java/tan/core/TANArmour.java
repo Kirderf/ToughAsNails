@@ -1,6 +1,7 @@
 package tan.core;
 
 import static tan.core.TANItems.registerItem;
+
 import net.minecraft.item.EnumArmorMaterial;
 import net.minecraft.item.Item;
 import net.minecraftforge.common.EnumHelper;

@@ -1,8 +1,8 @@
 package tan.eventhandler;
 
 import net.minecraft.block.Block;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerEntityMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
@@ -13,6 +13,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.ForgeSubscribe;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fluids.FluidContainerRegistry;
 import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
@@ -27,13 +28,13 @@ import tan.stats.ThirstStat;
 
 public class ThirstItemEventHandler
 {
-    @ForgeSubscribe
+    @SubscribeEvent
     public void onEntityLivingUpdate(LivingEvent.LivingUpdateEvent event)
     {
-        if (event.entityLiving instanceof EntityPlayer)
+        if (event.getEntityLiving() instanceof PlayerEntity)
         {
-            EntityPlayer player = (EntityPlayer)event.entityLiving;
-            World world = player.worldObj;
+            PlayerEntity player = (PlayerEntity)event.entityLiving;
+            World world = player.world;
 
             if (world.isRemote)
             {
@@ -58,11 +59,11 @@ public class ThirstItemEventHandler
         }
     }
 
-    public static void onFinishedDrinking(EntityPlayer player, int itemID, int metadata, String fluidName, int fluidAmount)
+    public static void onFinishedDrinking(PlayerEntity player, int itemID, int metadata, String fluidName, int fluidAmount)
     {
         if (player != null)
         {
-            World world = player.worldObj;
+            World world = player.world;
 
             FluidStack fluidStack = new FluidStack(FluidRegistry.getFluid(fluidName), fluidAmount);
             ThirstStat thirstStat = TANPlayerStatUtils.getPlayerStat(player, ThirstStat.class);
@@ -83,7 +84,7 @@ public class ThirstItemEventHandler
         }
     }
 
-    @ForgeSubscribe
+    @SubscribeEvent
     public void onFluidRegister(FluidContainerRegistry.FluidContainerRegisterEvent event)
     {
         FluidContainerRegistry.FluidContainerData data = event.data;
@@ -95,11 +96,11 @@ public class ThirstItemEventHandler
         }
     }
 
-    @ForgeSubscribe
+    @SubscribeEvent
     public void onItemUse(PlayerInteractEvent event)
     {
-        EntityPlayer player = event.entityPlayer;
-        World world = player.worldObj;
+        PlayerEntity player = event.getEntityPlayer();
+        World world = player.world;
 
         MovingObjectPosition pos = getMovingObjectPositionFromPlayer(world, player, true);
         ItemStack equippedItem = player.getCurrentEquippedItem();
@@ -120,14 +121,14 @@ public class ThirstItemEventHandler
         }
     }
 
-    protected MovingObjectPosition getMovingObjectPositionFromPlayer(World par1World, EntityPlayer par2EntityPlayer, boolean par3)
+    protected MovingObjectPosition getMovingObjectPositionFromPlayer(World par1World, PlayerEntity par2PlayerEntity, boolean par3)
     {
         float f = 1.0F;
-        float f1 = par2EntityPlayer.prevRotationPitch + (par2EntityPlayer.rotationPitch - par2EntityPlayer.prevRotationPitch) * f;
-        float f2 = par2EntityPlayer.prevRotationYaw + (par2EntityPlayer.rotationYaw - par2EntityPlayer.prevRotationYaw) * f;
-        double d0 = par2EntityPlayer.prevPosX + (par2EntityPlayer.posX - par2EntityPlayer.prevPosX) * (double)f;
-        double d1 = par2EntityPlayer.prevPosY + (par2EntityPlayer.posY - par2EntityPlayer.prevPosY) * (double)f + (double)(par1World.isRemote ? par2EntityPlayer.getEyeHeight() - par2EntityPlayer.getDefaultEyeHeight() : par2EntityPlayer.getEyeHeight()); // isRemote check to revert changes to ray trace position due to adding the eye height clientside and player yOffset differences
-        double d2 = par2EntityPlayer.prevPosZ + (par2EntityPlayer.posZ - par2EntityPlayer.prevPosZ) * (double)f;
+        float f1 = par2PlayerEntity.prevRotationPitch + (par2PlayerEntity.rotationPitch - par2PlayerEntity.prevRotationPitch) * f;
+        float f2 = par2PlayerEntity.prevRotationYaw + (par2PlayerEntity.rotationYaw - par2PlayerEntity.prevRotationYaw) * f;
+        double d0 = par2PlayerEntity.prevPosX + (par2PlayerEntity.posX - par2PlayerEntity.prevPosX) * (double)f;
+        double d1 = par2PlayerEntity.prevPosY + (par2PlayerEntity.posY - par2PlayerEntity.prevPosY) * (double)f + (double)(par1World.isRemote ? par2PlayerEntity.getEyeHeight() - par2PlayerEntity.getDefaultEyeHeight() : par2PlayerEntity.getEyeHeight()); // isRemote check to revert changes to ray trace position due to adding the eye height clientside and player yOffset differences
+        double d2 = par2PlayerEntity.prevPosZ + (par2PlayerEntity.posZ - par2PlayerEntity.prevPosZ) * (double)f;
         Vec3 vec3 = par1World.getWorldVec3Pool().getVecFromPool(d0, d1, d2);
         float f3 = MathHelper.cos(-f2 * 0.017453292F - (float) Math.PI);
         float f4 = MathHelper.sin(-f2 * 0.017453292F - (float)Math.PI);
@@ -136,9 +137,9 @@ public class ThirstItemEventHandler
         float f7 = f4 * f5;
         float f8 = f3 * f5;
         double d3 = 5.0D;
-        if (par2EntityPlayer instanceof EntityPlayerMP)
+        if (par2PlayerEntity instanceof PlayerEntity)
         {
-            d3 = ((EntityPlayerMP)par2EntityPlayer).theItemInWorldManager.getBlockReachDistance();
+            d3 = ((PlayerEntity)par2PlayerEntity).item.theItemInWorldManager.getBlockReachDistance();
         }
         Vec3 vec31 = vec3.addVector((double)f7 * d3, (double)f6 * d3, (double)f8 * d3);
         return par1World.rayTraceBlocks_do_do(vec3, vec31, par3, !par3);

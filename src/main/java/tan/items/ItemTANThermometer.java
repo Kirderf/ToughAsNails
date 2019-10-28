@@ -1,18 +1,16 @@
 package tan.items;
 
-import cpw.mods.fml.client.FMLClientHandler;
-import cpw.mods.fml.relauncher.Side;
+import com.sun.prism.TextureMap;
+
 import cpw.mods.fml.relauncher.SideOnly;
+import javafx.geometry.Side;
 import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatMessageComponent;
-import net.minecraft.util.Icon;
-import net.minecraft.util.MathHelper;
-import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import tan.ToughAsNails;
 import tan.api.utils.TemperatureUtils;
@@ -29,7 +27,6 @@ public class ItemTANThermometer extends Item
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
     public void registerIcons(IconRegister iconRegister)
     {
         if (iconRegister instanceof TextureMap)
