@@ -1,0 +1,23 @@
+[28Oct2019 01:03:37.682] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher running: args [--gameDir, ., --launchTarget, fmluserdevclient, --fml.mcpVersion, 20190829.143755, --fml.mcVersion, 1.14.4, --fml.forgeGroup, net.minecraftforge, --fml.forgeVersion, 28.1.70, --version, MOD_DEV, --assetIndex, 1.14, --assetsDir, C:\Users\Fredrik Julsen\.gradle\caches\forge_gradle\assets, --username, Dev, --accessToken, ????????, --userProperties, {}]
+[28Oct2019 01:03:37.687] [main/INFO] [cpw.mods.modlauncher.Launcher/MODLAUNCHER]: ModLauncher 4.1.0+62+5bfa59b starting: java version 1.8.0_231 by Oracle Corporation
+[28Oct2019 01:03:38.510] [main/INFO] [net.minecraftforge.fml.loading.FixSSL/CORE]: Added Lets Encrypt root certificates as additional trust
+[28Oct2019 01:03:40.043] [main/INFO] [cpw.mods.modlauncher.LaunchServiceHandler/MODLAUNCHER]: Launching target 'fmluserdevclient' with arguments [--version, MOD_DEV, --gameDir, ., --assetsDir, C:\Users\Fredrik Julsen\.gradle\caches\forge_gradle\assets, --assetIndex, 1.14, --username, Dev, --accessToken, ????????, --userProperties, {}]
+[28Oct2019 01:03:43.928] [Client thread/INFO] [net.minecraft.client.Minecraft/]: Setting user: Dev
+[28Oct2019 01:03:59.749] [Client thread/INFO] [net.minecraft.client.Minecraft/]: LWJGL Version: 3.2.2 build 10
+[28Oct2019 01:04:01.224] [modloading-worker-3/INFO] [net.minecraftforge.common.ForgeMod/FORGEMOD]: Forge mod loading, version 28.1.70, for MC 1.14.4 with MCP 20190829.143755
+[28Oct2019 01:04:01.224] [modloading-worker-3/INFO] [net.minecraftforge.common.MinecraftForge/FORGE]: MinecraftForge v28.1.70 Initialized
+[28Oct2019 01:04:01.600] [Client thread/INFO] [compactxpbottles/]: Items Registered
+[28Oct2019 01:04:05.355] [Client thread/INFO] [com.mojang.text2speech.NarratorWindows/]: Narrator library for x64 successfully loaded
+[28Oct2019 01:04:05.497] [modloading-worker-1/INFO] [compactxpbottles/]: Setup method registered
+[28Oct2019 01:04:05.499] [Thread-1/FATAL] [net.minecraftforge.common.ForgeConfig/CORE]: Forge config just got changed on the file system!
+[28Oct2019 01:04:05.799] [modloading-worker-1/INFO] [compactxpbottles/]: clientRegisteries method registered
+[28Oct2019 01:04:05.799] [Forge Version Check/INFO] [net.minecraftforge.fml.VersionChecker/]: [forge] Starting version check at https://files.minecraftforge.net/maven/net/minecraftforge/forge/promotions_slim.json
+[28Oct2019 01:04:08.094] [Forge Version Check/INFO] [net.minecraftforge.fml.VersionChecker/]: [forge] Found status: AHEAD Current: 28.1.70 Target: null
+[28Oct2019 01:04:13.007] [Client thread/INFO] [net.minecraft.client.audio.SoundSystem/]: OpenAL initialized.
+[28Oct2019 01:04:13.008] [Client thread/INFO] [net.minecraft.client.audio.SoundEngine/SOUNDS]: Sound engine started
+[28Oct2019 01:04:13.246] [Client thread/INFO] [net.minecraft.client.renderer.texture.AtlasTexture/]: Created: 512x512 textures-atlas
+[28Oct2019 01:04:14.071] [Client thread/INFO] [net.minecraft.client.renderer.texture.AtlasTexture/]: Created: 256x256 textures/particle-atlas
+[28Oct2019 01:04:14.080] [Client thread/INFO] [net.minecraft.client.renderer.texture.AtlasTexture/]: Created: 256x256 textures/painting-atlas
+[28Oct2019 01:04:14.082] [Client thread/INFO] [net.minecraft.client.renderer.texture.AtlasTexture/]: Created: 128x128 textures/mob_effect-atlas
+[28Oct2019 01:04:14.844] [Realms Notification Availability checker #1/INFO] [com.mojang.realmsclient.client.RealmsClient/]: Could not authorize you against Realms server: Invalid session id
+[28Oct2019 01:04:30.197] [Client thread/INFO] [net.minecraft.client.Minecraft/]: Stopping!

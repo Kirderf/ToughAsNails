@@ -40,7 +40,7 @@ public class ToughAsNails {
 
 	public void setup(final FMLCommonSetupEvent event) {
 		// configPath = event.getModConfigurationDirectory() + "/toughasnails/";
-		config.con
+		//config.con
 		TANConfiguration.init(configPath);
 
 		TANPotions.init();
